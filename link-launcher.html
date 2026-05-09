@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Link Launcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f8f8f6;
+      --card-bg: #ffffff;
+      --text-primary: #111111;
+      --text-secondary: #666666;
+      --text-tertiary: #aaaaaa;
+      --border: rgba(0,0,0,0.12);
+      --border-hover: rgba(0,0,0,0.25);
+      --input-bg: #f2f2f0;
+      --accent: #0f172a;
+      --accent-glow: #e2ff5d;
+      --success: #3B6D11;
+      --error: #A32D2D;
+      --radius-card: 20px;
+      --radius-btn: 10px;
+      --radius-sm: 8px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --card-bg: #1a1a1a;
+        --text-primary: #f0f0f0;
+        --text-secondary: #999999;
+        --text-tertiary: #555555;
+        --border: rgba(255,255,255,0.1);
+        --border-hover: rgba(255,255,255,0.25);
+        --input-bg: #222222;
+        --accent: #e2ff5d;
+        --accent-glow: #0f172a;
+        --success: #639922;
+        --error: #E24B4A;
+      }
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .launcher-card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--card-bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 2.5rem 2rem 2rem;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+    }
+
+    .launcher-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 2rem;
+    }
+
+    .launcher-icon {
+      width: 48px;
+      height: 48px;
+      background: #0f172a;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .launcher-icon i {
+      color: #e2ff5d;
+      font-size: 24px;
+    }
+
+    .launcher-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .launcher-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 3px;
+      font-weight: 400;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      margin-bottom: 1.25rem;
+    }
+
+    .url-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .url-input-wrap i {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 17px;
+      color: var(--text-tertiary);
+      pointer-events: none;
+    }
+
+    #url-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px 0 42px;
+      border: 0.5px solid var(--border-hover);
+      border-radius: var(--radius-btn);
+      font-size: 14px;
+      font-family: 'Space Mono', monospace;
+      background: var(--input-bg);
+      color: var(--text-primary);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+    }
+
+    #url-input:focus {
+      border-color: #0f172a;
+      box-shadow: 0 0 0 3px rgba(15,23,42,0.08);
+    }
+
+    #url-input::placeholder {
+      color: var(--text-tertiary);
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+    }
+
+    #go-btn {
+      height: 48px;
+      padding: 0 24px;
+      background: #0f172a;
+      color: #e2ff5d;
+      border: none;
+      border-radius: var(--radius-btn);
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.3px;
+      transition: transform 0.1s, opacity 0.15s;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    #go-btn:hover { opacity: 0.85; }
+    #go-btn:active { transform: scale(0.97); }
+    #go-btn i { font-size: 17px; }
+
+    .mode-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 0.4rem;
+    }
+
+    .mode-btn {
+      flex: 1;
+      height: 42px;
+      background: var(--input-bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all 0.15s;
+    }
+
+    .mode-btn i { font-size: 17px; }
+
+    .mode-btn.active {
+      background: #0f172a;
+      border-color: #0f172a;
+      color: #e2ff5d;
+    }
+
+    .mode-btn:not(.active):hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+
+    .mode-label {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      margin-bottom: 0.25rem;
+    }
+
+    .status-bar {
+      margin-top: 1.25rem;
+      min-height: 28px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-family: 'Space Mono', monospace;
+    }
+
+    .status-bar.error { color: var(--error); }
+    .status-bar.success { color: var(--success); }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .dot.go   { background: #e2ff5d; border: 1.5px solid #b0c200; }
+    .dot.err  { background: #E24B4A; }
+    .dot.ok   { background: #639922; }
+  </style>
+</head>
+<body>
+
+  <div class="launcher-card">
+    <div class="launcher-header">
+      <div class="launcher-icon">
+        <i class="ti ti-rocket"></i>
+      </div>
+      <div>
+        <div class="launcher-title">Link Launcher</div>
+        <div class="launcher-sub">Paste any URL and go</div>
+      </div>
+    </div>
+
+    <div class="input-row">
+      <div class="url-input-wrap">
+        <i class="ti ti-link"></i>
+        <input
+          id="url-input"
+          type="url"
+          placeholder="https://example.com"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="none"
+          spellcheck="false"
+        />
+      </div>
+      <button id="go-btn" onclick="launch()">
+        <i class="ti ti-arrow-right"></i>
+        Go
+      </button>
+    </div>
+
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="btn-new" onclick="setMode('new')">
+        <i class="ti ti-external-link"></i>
+        New tab
+      </button>
+      <button class="mode-btn" id="btn-same" onclick="setMode('same')">
+        <i class="ti ti-replace"></i>
+        Same tab
+      </button>
+    </div>
+    <p class="mode-label" id="mode-label">opens in a new tab</p>
+
+    <div class="status-bar" id="status-bar">
+      <span class="dot" id="status-dot"></span>
+      <span id="status-text">ready to launch</span>
+    </div>
+  </div>
+
+  <script>
+    let mode = 'new';
+
+    function setMode(m) {
+      mode = m;
+      document.getElementById('btn-new').classList.toggle('active', m === 'new');
+      document.getElementById('btn-same').classList.toggle('active', m === 'same');
+      document.getElementById('mode-label').textContent =
+        m === 'new' ? 'opens in a new tab' : 'replaces this page';
+      setStatus('ready', 'ready to launch');
+    }
+
+    function setStatus(type, msg) {
+      const bar  = document.getElementById('status-bar');
+      const dot  = document.getElementById('status-dot');
+      const text = document.getElementById('status-text');
+      bar.className  = 'status-bar' + (type === 'error' ? ' error' : type === 'success' ? ' success' : '');
+      dot.className  = 'dot' + (type === 'go' ? ' go' : type === 'error' ? ' err' : type === 'success' ? ' ok' : '');
+      text.textContent = msg;
+    }
+
+    function normalizeUrl(raw) {
+      raw = raw.trim();
+      if (!raw) return null;
+      if (/^https?:\/\//i.test(raw)) return raw;
+      if (/^localhost|^\d{1,3}(\.\d{1,3}){3}/i.test(raw)) return 'http://' + raw;
+      return 'https://' + raw;
+    }
+
+    function launch() {
+      const raw = document.getElementById('url-input').value;
+      const url = normalizeUrl(raw);
+
+      if (!url) {
+        setStatus('error', 'please enter a URL first');
+        document.getElementById('url-input').focus();
+        return;
+      }
+
+      try { new URL(url); } catch(e) {
+        setStatus('error', "that doesn't look like a valid URL");
+        return;
+      }
+
+      setStatus('go', 'launching → ' + url);
+
+      if (mode === 'new') {
+        window.open(url, '_blank', 'noopener,noreferrer');
+        setTimeout(() => setStatus('success', 'opened in new tab ✓'), 400);
+      } else {
+        window.location.href = url;
+      }
+    }
+
+    document.getElementById('url-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') launch();
+    });
+
+    document.getElementById('url-input').addEventListener('input', () => {
+      setStatus('ready', 'ready to launch');
+    });
+  </script>
+
+</body>
+</html>
