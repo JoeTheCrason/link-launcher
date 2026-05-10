@@ -1,6 +1,6 @@
 # Link Launcher 🔗
 
-Features:
+**Features:**
 * New + Same Tab Switch (May be needed for some bypasses) 🔄️
 * Quick Launch with over 21 quick and useful links 🪶
 * A plus button to add your own shortcuts (LocalStorage which means if you clear your cookies it may be removed) ➕
