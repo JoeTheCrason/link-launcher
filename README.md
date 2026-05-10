@@ -16,4 +16,4 @@ This website serves as a utility for users to browse the internet with ease on e
 
 * https://link-launcher.netlify.app/ ( Main Site)
 
-*Note 📝:* There are currently no alternative links do not use any other external providers that claim to be the original repository.
+**Note 📝:** There are currently no alternative links do not use any other external providers that claim to be the original repository.
