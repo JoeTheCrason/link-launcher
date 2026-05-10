@@ -8,41 +8,40 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f8f8f6;
+      --bg: #f0f0ed;
       --card-bg: #ffffff;
       --text-primary: #111111;
       --text-secondary: #666666;
       --text-tertiary: #aaaaaa;
-      --border: rgba(0,0,0,0.12);
-      --border-hover: rgba(0,0,0,0.25);
-      --input-bg: #f2f2f0;
-      --accent: #0f172a;
-      --accent-glow: #e2ff5d;
+      --border: rgba(0,0,0,0.11);
+      --border-hover: rgba(0,0,0,0.22);
+      --input-bg: #f4f4f2;
       --success: #3B6D11;
       --error: #A32D2D;
-      --radius-card: 20px;
-      --radius-btn: 10px;
-      --radius-sm: 8px;
+      --radius-card: 22px;
+      --radius-btn: 11px;
+      --radius-sm: 9px;
+      --shadow: 0 6px 40px rgba(0,0,0,0.08);
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #111111;
+        --bg: #0e0e0e;
         --card-bg: #1a1a1a;
         --text-primary: #f0f0f0;
-        --text-secondary: #999999;
-        --text-tertiary: #555555;
-        --border: rgba(255,255,255,0.1);
-        --border-hover: rgba(255,255,255,0.25);
-        --input-bg: #222222;
-        --accent: #e2ff5d;
-        --accent-glow: #0f172a;
+        --text-secondary: #888888;
+        --text-tertiary: #444444;
+        --border: rgba(255,255,255,0.09);
+        --border-hover: rgba(255,255,255,0.22);
+        --input-bg: #242424;
         --success: #639922;
         --error: #E24B4A;
+        --shadow: 0 6px 40px rgba(0,0,0,0.35);
       }
     }
 
@@ -51,210 +50,259 @@
       font-family: 'Syne', sans-serif;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 2rem 1rem;
+      padding: 2rem 1rem 3rem;
     }
 
+    /* ── CARD ── */
     .launcher-card {
-      width: 100%;
-      max-width: 560px;
+      width: 100%; max-width: 580px;
       background: var(--card-bg);
       border: 0.5px solid var(--border);
       border-radius: var(--radius-card);
-      padding: 2.5rem 2rem 2rem;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+      padding: 2.4rem 2rem 1.8rem;
+      box-shadow: var(--shadow);
     }
 
     .launcher-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 2rem;
+      display: flex; align-items: center;
+      gap: 14px; margin-bottom: 2rem;
     }
 
     .launcher-icon {
-      width: 48px;
-      height: 48px;
-      background: #0f172a;
-      border-radius: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 50px; height: 50px; background: #0f172a;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-
-    .launcher-icon i {
-      color: #e2ff5d;
-      font-size: 24px;
-    }
+    .launcher-icon i { color: #e2ff5d; font-size: 25px; }
 
     .launcher-title {
-      font-size: 22px;
-      font-weight: 800;
+      font-size: 23px; font-weight: 800;
       color: var(--text-primary);
-      letter-spacing: -0.5px;
-      line-height: 1.1;
+      letter-spacing: -0.5px; line-height: 1.1;
     }
+    .launcher-sub { font-size: 13px; color: var(--text-secondary); margin-top: 3px; font-weight: 400; }
 
-    .launcher-sub {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-top: 3px;
-      font-weight: 400;
-    }
-
+    /* ── INPUT ROW ── */
     .input-row {
-      display: flex;
-      gap: 10px;
-      align-items: stretch;
-      margin-bottom: 1.25rem;
+      display: flex; gap: 10px; align-items: flex-start;
+      margin-bottom: 1.2rem; position: relative;
     }
-
-    .url-input-wrap {
-      flex: 1;
-      position: relative;
+    .url-input-wrap { flex: 1; position: relative; }
+    .url-input-wrap > i {
+      position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+      font-size: 17px; color: var(--text-tertiary); pointer-events: none; z-index: 2;
     }
-
-    .url-input-wrap i {
-      position: absolute;
-      left: 13px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 17px;
-      color: var(--text-tertiary);
-      pointer-events: none;
-    }
-
     #url-input {
-      width: 100%;
-      height: 48px;
-      padding: 0 14px 0 42px;
-      border: 0.5px solid var(--border-hover);
-      border-radius: var(--radius-btn);
-      font-size: 14px;
-      font-family: 'Space Mono', monospace;
-      background: var(--input-bg);
-      color: var(--text-primary);
-      transition: border-color 0.15s, box-shadow 0.15s;
-      outline: none;
+      width: 100%; height: 50px; padding: 0 14px 0 42px;
+      border: 0.5px solid var(--border-hover); border-radius: var(--radius-btn);
+      font-size: 14px; font-family: 'Space Mono', monospace;
+      background: var(--input-bg); color: var(--text-primary);
+      transition: border-color .15s, box-shadow .15s; outline: none;
     }
+    #url-input:focus { border-color: #0f172a; box-shadow: 0 0 0 3px rgba(15,23,42,0.08); }
+    #url-input::placeholder { color: var(--text-tertiary); font-family: 'Space Mono', monospace; font-size: 13px; }
 
-    #url-input:focus {
-      border-color: #0f172a;
-      box-shadow: 0 0 0 3px rgba(15,23,42,0.08);
+    /* ── SUGGESTIONS ── */
+    .suggestions-dropdown {
+      position: absolute; top: calc(100% + 5px); left: 0; right: 0;
+      background: var(--card-bg); border: 0.5px solid var(--border-hover);
+      border-radius: var(--radius-sm); box-shadow: 0 10px 36px rgba(0,0,0,0.13);
+      z-index: 200; overflow: hidden; display: none;
     }
-
-    #url-input::placeholder {
-      color: var(--text-tertiary);
-      font-family: 'Space Mono', monospace;
-      font-size: 13px;
+    .suggestions-dropdown.open { display: block; }
+    .suggestion-item {
+      display: flex; align-items: center; gap: 11px;
+      padding: 10px 14px; cursor: pointer; transition: background .1s;
     }
+    .suggestion-item:hover, .suggestion-item.focused { background: var(--input-bg); }
+    .suggestion-favicon { width: 20px; height: 20px; border-radius: 5px; object-fit: contain; flex-shrink: 0; background: var(--input-bg); }
+    .suggestion-text { flex: 1; overflow: hidden; }
+    .suggestion-name { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+    .suggestion-url { font-size: 12px; color: var(--text-tertiary); font-family: 'Space Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+    /* ── GO BUTTON ── */
     #go-btn {
-      height: 48px;
-      padding: 0 24px;
-      background: #0f172a;
-      color: #e2ff5d;
-      border: none;
-      border-radius: var(--radius-btn);
-      font-family: 'Syne', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      letter-spacing: 0.3px;
-      transition: transform 0.1s, opacity 0.15s;
-      flex-shrink: 0;
-      white-space: nowrap;
+      height: 50px; padding: 0 24px; background: #0f172a; color: #e2ff5d;
+      border: none; border-radius: var(--radius-btn);
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
+      transition: transform .1s, opacity .15s; flex-shrink: 0; white-space: nowrap;
     }
-
-    #go-btn:hover { opacity: 0.85; }
-    #go-btn:active { transform: scale(0.97); }
+    #go-btn:hover { opacity: .85; }
+    #go-btn:active { transform: scale(.97); }
     #go-btn i { font-size: 17px; }
 
-    .mode-toggle {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 0.4rem;
-    }
-
+    /* ── MODE TOGGLE ── */
+    .mode-toggle { display: flex; gap: 8px; margin-bottom: .4rem; }
     .mode-btn {
-      flex: 1;
-      height: 42px;
-      background: var(--input-bg);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-family: 'Syne', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      transition: all 0.15s;
+      flex: 1; height: 42px; background: var(--input-bg);
+      border: 0.5px solid var(--border); border-radius: var(--radius-sm);
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--text-secondary); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      transition: all .15s;
     }
-
     .mode-btn i { font-size: 17px; }
+    .mode-btn.active { background: #0f172a; border-color: #0f172a; color: #e2ff5d; }
+    .mode-btn:not(.active):hover { border-color: var(--border-hover); color: var(--text-primary); }
+    .mode-label { font-size: 12px; color: var(--text-tertiary); text-align: center; font-family: 'Space Mono', monospace; margin-bottom: .2rem; }
 
-    .mode-btn.active {
-      background: #0f172a;
-      border-color: #0f172a;
-      color: #e2ff5d;
-    }
-
-    .mode-btn:not(.active):hover {
-      border-color: var(--border-hover);
-      color: var(--text-primary);
-    }
-
-    .mode-label {
-      font-size: 12px;
-      color: var(--text-tertiary);
-      text-align: center;
-      font-family: 'Space Mono', monospace;
-      margin-bottom: 0.25rem;
-    }
-
+    /* ── STATUS ── */
     .status-bar {
-      margin-top: 1.25rem;
-      min-height: 28px;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-size: 13px;
-      color: var(--text-secondary);
-      font-family: 'Space Mono', monospace;
+      margin-top: 1.1rem; min-height: 26px;
+      display: flex; align-items: center; gap: 9px;
+      font-size: 13px; color: var(--text-secondary); font-family: 'Space Mono', monospace;
     }
-
     .status-bar.error { color: var(--error); }
     .status-bar.success { color: var(--success); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: background .2s; }
+    .dot.go  { background: #e2ff5d; border: 1.5px solid #b0c200; }
+    .dot.err { background: #E24B4A; }
+    .dot.ok  { background: #639922; }
 
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--border);
-      flex-shrink: 0;
-      transition: background 0.2s;
+    /* ── SHORTCUT BAR ── */
+    .shortcut-bar {
+      width: 100%; max-width: 580px; margin-top: 16px;
+      background: var(--card-bg); border: 0.5px solid var(--border);
+      border-radius: var(--radius-card); padding: 1.3rem 1.6rem 1.4rem;
+      box-shadow: var(--shadow);
+    }
+    .shortcut-bar-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .shortcut-label {
+      font-size: 11px; font-family: 'Space Mono', monospace;
+      color: var(--text-tertiary); letter-spacing: .08em; text-transform: uppercase;
     }
 
-    .dot.go   { background: #e2ff5d; border: 1.5px solid #b0c200; }
-    .dot.err  { background: #E24B4A; }
-    .dot.ok   { background: #639922; }
+    /* ── ADD BUTTON ── */
+    .add-btn {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: #0f172a; color: #e2ff5d;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700; line-height: 1;
+      transition: transform .1s, opacity .15s; flex-shrink: 0;
+    }
+    .add-btn:hover { opacity: .82; }
+    .add-btn:active { transform: scale(.93); }
+
+    /* ── GRID ── */
+    .shortcuts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+      gap: 8px;
+    }
+
+    /* base chip */
+    .shortcut-chip {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 10px 6px 9px; border-radius: var(--radius-sm);
+      background: var(--input-bg); border: 0.5px solid var(--border);
+      cursor: pointer; transition: all .15s; position: relative;
+    }
+    .shortcut-chip:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px); box-shadow: 0 5px 16px rgba(0,0,0,0.1);
+    }
+    .shortcut-chip:active { transform: scale(.96); }
+
+    .chip-favicon { width: 28px; height: 28px; border-radius: 8px; object-fit: contain; background: #fff; padding: 2px; }
+    .chip-name { font-size: 11px; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 68px; }
+
+    /* delete x on custom chips */
+    .chip-delete {
+      position: absolute; top: 4px; right: 4px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #E24B4A; color: #fff;
+      border: none; cursor: pointer;
+      font-size: 10px; font-weight: 700; line-height: 1;
+      display: none; align-items: center; justify-content: center;
+      transition: opacity .15s;
+    }
+    .shortcut-chip:hover .chip-delete { display: flex; }
+    .chip-delete:hover { opacity: .8; }
+
+    /* custom chip ring */
+    .shortcut-chip.custom { border-style: dashed; border-color: var(--border-hover); }
+
+    /* ── MODAL OVERLAY ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 500; padding: 1rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity .2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      width: 100%; max-width: 400px;
+      background: var(--card-bg); border: 0.5px solid var(--border);
+      border-radius: var(--radius-card); padding: 2rem 1.8rem 1.6rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      transform: translateY(12px); transition: transform .2s;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-title {
+      font-size: 18px; font-weight: 800; color: var(--text-primary);
+      letter-spacing: -0.3px; margin-bottom: 1.4rem;
+    }
+
+    .modal-field { margin-bottom: 1rem; }
+    .modal-field label {
+      display: block; font-size: 11px; font-weight: 700;
+      color: var(--text-tertiary); text-transform: uppercase;
+      letter-spacing: .07em; margin-bottom: 6px;
+      font-family: 'Space Mono', monospace;
+    }
+    .modal-field input {
+      width: 100%; height: 44px; padding: 0 13px;
+      border: 0.5px solid var(--border-hover); border-radius: var(--radius-sm);
+      font-size: 14px; font-family: 'Space Mono', monospace;
+      background: var(--input-bg); color: var(--text-primary);
+      outline: none; transition: border-color .15s, box-shadow .15s;
+    }
+    .modal-field input:focus { border-color: #0f172a; box-shadow: 0 0 0 3px rgba(15,23,42,0.08); }
+    .modal-field input::placeholder { color: var(--text-tertiary); font-size: 13px; }
+
+    .modal-error {
+      font-size: 12px; color: var(--error);
+      font-family: 'Space Mono', monospace;
+      min-height: 18px; margin-bottom: .6rem;
+    }
+
+    .modal-actions { display: flex; gap: 8px; margin-top: 1.2rem; }
+    .modal-save {
+      flex: 1; height: 44px; background: #0f172a; color: #e2ff5d;
+      border: none; border-radius: var(--radius-sm);
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: opacity .15s;
+    }
+    .modal-save:hover { opacity: .85; }
+    .modal-cancel {
+      height: 44px; padding: 0 18px;
+      background: var(--input-bg); border: 0.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600;
+      color: var(--text-secondary); cursor: pointer; transition: border-color .15s;
+    }
+    .modal-cancel:hover { border-color: var(--border-hover); }
   </style>
 </head>
 <body>
 
+  <!-- MAIN CARD -->
   <div class="launcher-card">
     <div class="launcher-header">
-      <div class="launcher-icon">
-        <i class="ti ti-rocket"></i>
-      </div>
+      <div class="launcher-icon"><i class="ti ti-rocket"></i></div>
       <div>
         <div class="launcher-title">Link Launcher</div>
         <div class="launcher-sub">Paste any URL and go</div>
@@ -264,30 +312,21 @@
     <div class="input-row">
       <div class="url-input-wrap">
         <i class="ti ti-link"></i>
-        <input
-          id="url-input"
-          type="url"
-          placeholder="https://example.com"
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="none"
-          spellcheck="false"
-        />
+        <input id="url-input" type="url" placeholder="https://example.com"
+          autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" />
+        <div class="suggestions-dropdown" id="suggestions"></div>
       </div>
       <button id="go-btn" onclick="launch()">
-        <i class="ti ti-arrow-right"></i>
-        Go
+        <i class="ti ti-arrow-right"></i> Go
       </button>
     </div>
 
     <div class="mode-toggle">
       <button class="mode-btn active" id="btn-new" onclick="setMode('new')">
-        <i class="ti ti-external-link"></i>
-        New tab
+        <i class="ti ti-external-link"></i> New tab
       </button>
       <button class="mode-btn" id="btn-same" onclick="setMode('same')">
-        <i class="ti ti-replace"></i>
-        Same tab
+        <i class="ti ti-replace"></i> Same tab
       </button>
     </div>
     <p class="mode-label" id="mode-label">opens in a new tab</p>
@@ -298,13 +337,252 @@
     </div>
   </div>
 
-  <script>
-    let mode = 'new';
+  <!-- SHORTCUT BAR -->
+  <div class="shortcut-bar">
+    <div class="shortcut-bar-header">
+      <div class="shortcut-label">Quick launch</div>
+      <button class="add-btn" onclick="openModal()" title="Add custom shortcut">+</button>
+    </div>
+    <div class="shortcuts-grid" id="shortcuts-grid"></div>
+  </div>
 
+  <!-- ADD SHORTCUT MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <div class="modal-title">Add shortcut</div>
+
+      <div class="modal-field">
+        <label>Name</label>
+        <input id="modal-name" type="text" placeholder="e.g. My Blog" maxlength="20" />
+      </div>
+      <div class="modal-field">
+        <label>URL</label>
+        <input id="modal-url" type="url" placeholder="https://..." />
+      </div>
+      <div class="modal-error" id="modal-error"></div>
+
+      <div class="modal-actions">
+        <button class="modal-save" onclick="saveCustom()">Save shortcut</button>
+        <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function gIcon(domain) {
+      return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+    }
+
+    const SITES = [
+      { name:'Google',      url:'https://google.com',        favicon: gIcon('google.com') },
+      { name:'YouTube',     url:'https://youtube.com',       favicon: gIcon('youtube.com') },
+      { name:'DuckDuckGo',  url:'https://duckduckgo.com',    favicon: gIcon('duckduckgo.com') },
+      { name:'GitHub',      url:'https://github.com',        favicon: gIcon('github.com') },
+      { name:'Reddit',      url:'https://reddit.com',        favicon: gIcon('reddit.com') },
+      { name:'Twitter/X',   url:'https://x.com',             favicon: gIcon('x.com') },
+      { name:'Instagram',   url:'https://instagram.com',     favicon: gIcon('instagram.com') },
+      { name:'Wikipedia',   url:'https://wikipedia.org',     favicon: gIcon('wikipedia.org') },
+      { name:'Netflix',     url:'https://netflix.com',       favicon: gIcon('netflix.com') },
+      { name:'Spotify',     url:'https://open.spotify.com',  favicon: gIcon('spotify.com') },
+      { name:'Amazon',      url:'https://amazon.com',        favicon: gIcon('amazon.com') },
+      { name:'ChatGPT',     url:'https://chatgpt.com',       favicon: gIcon('chatgpt.com') },
+      { name:'Claude',      url:'https://claude.ai',         favicon: gIcon('claude.ai') },
+      { name:'LinkedIn',    url:'https://linkedin.com',      favicon: gIcon('linkedin.com') },
+      { name:'TikTok',      url:'https://tiktok.com',        favicon: gIcon('tiktok.com') },
+      { name:'Twitch',      url:'https://twitch.tv',         favicon: gIcon('twitch.tv') },
+      { name:'Discord',     url:'https://discord.com',       favicon: gIcon('discord.com') },
+      { name:'Gmail',       url:'https://mail.google.com',   favicon: gIcon('mail.google.com') },
+      { name:'Drive',       url:'https://drive.google.com',  favicon: gIcon('drive.google.com') },
+      { name:'Notion',      url:'https://notion.so',         favicon: gIcon('notion.so') },
+      { name:'Figma',       url:'https://figma.com',         favicon: gIcon('figma.com') },
+    ];
+
+    /* ── ALL SUGGESTIONS = built-ins + custom ── */
+    function allSites() {
+      return [...SITES, ...loadCustom()];
+    }
+
+    let mode = 'new', focusedIdx = -1, visibleSuggs = [];
+
+    /* ────────────────────────────────
+       GRID
+    ──────────────────────────────── */
+    const grid = document.getElementById('shortcuts-grid');
+
+    function buildGrid() {
+      grid.innerHTML = '';
+      SITES.forEach(site => grid.appendChild(makeChip(site, false)));
+      loadCustom().forEach(site => grid.appendChild(makeChip(site, true)));
+    }
+
+    function makeChip(site, isCustom) {
+      const chip = document.createElement('div');
+      chip.className = 'shortcut-chip' + (isCustom ? ' custom' : '');
+      chip.title = site.url;
+
+      chip.innerHTML = `
+        <img class="chip-favicon" src="${site.favicon}" alt="${site.name}"
+             onerror="this.style.display='none'"/>
+        <span class="chip-name">${site.name}</span>
+        ${isCustom ? `<button class="chip-delete" title="Remove">✕</button>` : ''}
+      `;
+
+      chip.querySelector('.chip-favicon, .chip-name') && chip.addEventListener('click', e => {
+        if (e.target.classList.contains('chip-delete')) return;
+        document.getElementById('url-input').value = site.url;
+        closeSuggestions();
+        launch();
+      });
+
+      if (isCustom) {
+        chip.querySelector('.chip-delete').addEventListener('click', e => {
+          e.stopPropagation();
+          deleteCustom(site.url);
+        });
+      }
+
+      return chip;
+    }
+
+    /* ────────────────────────────────
+       LOCALSTORAGE
+    ──────────────────────────────── */
+    const LS_KEY = 'link_launcher_custom_v1';
+
+    function loadCustom() {
+      try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; }
+      catch { return []; }
+    }
+
+    function saveCustomList(list) {
+      localStorage.setItem(LS_KEY, JSON.stringify(list));
+    }
+
+    function deleteCustom(url) {
+      const list = loadCustom().filter(s => s.url !== url);
+      saveCustomList(list);
+      buildGrid();
+    }
+
+    /* ────────────────────────────────
+       MODAL
+    ──────────────────────────────── */
+    function openModal() {
+      document.getElementById('modal-name').value = '';
+      document.getElementById('modal-url').value  = '';
+      document.getElementById('modal-error').textContent = '';
+      document.getElementById('modal-overlay').classList.add('open');
+      setTimeout(() => document.getElementById('modal-name').focus(), 120);
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('modal-overlay')) closeModal();
+    }
+
+    function saveCustom() {
+      const name = document.getElementById('modal-name').value.trim();
+      const raw  = document.getElementById('modal-url').value.trim();
+      const errEl = document.getElementById('modal-error');
+
+      if (!name) { errEl.textContent = 'give it a name first'; return; }
+      if (!raw)  { errEl.textContent = 'URL is empty'; return; }
+
+      const url = normalizeUrl(raw);
+      try { new URL(url); } catch { errEl.textContent = "that URL doesn't look right"; return; }
+
+      const list = loadCustom();
+      if (list.find(s => s.url === url)) { errEl.textContent = 'already in your shortcuts'; return; }
+
+      let domain;
+      try { domain = new URL(url).hostname; } catch { domain = url; }
+
+      list.push({ name, url, favicon: gIcon(domain) });
+      saveCustomList(list);
+      buildGrid();
+      closeModal();
+    }
+
+    // save on Enter inside modal inputs
+    ['modal-name','modal-url'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') saveCustom();
+        if (e.key === 'Escape') closeModal();
+      });
+    });
+
+    /* ────────────────────────────────
+       SUGGESTIONS
+    ──────────────────────────────── */
+    const input    = document.getElementById('url-input');
+    const dropdown = document.getElementById('suggestions');
+
+    function openSuggestions(matches) {
+      visibleSuggs = matches; focusedIdx = -1;
+      dropdown.innerHTML = '';
+      matches.forEach(site => {
+        const item = document.createElement('div');
+        item.className = 'suggestion-item';
+        item.innerHTML = `
+          <img class="suggestion-favicon" src="${site.favicon}" alt=""
+               onerror="this.style.display='none'"/>
+          <div class="suggestion-text">
+            <div class="suggestion-name">${site.name}</div>
+            <div class="suggestion-url">${site.url}</div>
+          </div>`;
+        item.addEventListener('mousedown', e => {
+          e.preventDefault();
+          input.value = site.url;
+          closeSuggestions();
+          setStatus('ready', 'ready to launch');
+        });
+        dropdown.appendChild(item);
+      });
+      dropdown.classList.add('open');
+    }
+
+    function closeSuggestions() {
+      dropdown.classList.remove('open');
+      visibleSuggs = []; focusedIdx = -1;
+    }
+
+    function updateFocus() {
+      [...dropdown.querySelectorAll('.suggestion-item')].forEach((el, i) =>
+        el.classList.toggle('focused', i === focusedIdx));
+    }
+
+    input.addEventListener('input', () => {
+      setStatus('ready', 'ready to launch');
+      const q = input.value.trim().toLowerCase();
+      if (!q) { closeSuggestions(); return; }
+      const matches = allSites().filter(s =>
+        s.name.toLowerCase().includes(q) || s.url.toLowerCase().includes(q)
+      ).slice(0, 6);
+      matches.length ? openSuggestions(matches) : closeSuggestions();
+    });
+
+    input.addEventListener('keydown', e => {
+      if (dropdown.classList.contains('open')) {
+        if (e.key === 'ArrowDown') { e.preventDefault(); focusedIdx = Math.min(focusedIdx+1, visibleSuggs.length-1); updateFocus(); return; }
+        if (e.key === 'ArrowUp')   { e.preventDefault(); focusedIdx = Math.max(focusedIdx-1, -1); updateFocus(); return; }
+        if (e.key === 'Enter' && focusedIdx >= 0) { input.value = visibleSuggs[focusedIdx].url; closeSuggestions(); launch(); return; }
+        if (e.key === 'Escape') { closeSuggestions(); return; }
+      }
+      if (e.key === 'Enter') launch();
+    });
+
+    input.addEventListener('blur', () => setTimeout(closeSuggestions, 150));
+
+    /* ────────────────────────────────
+       MODE / STATUS / LAUNCH
+    ──────────────────────────────── */
     function setMode(m) {
       mode = m;
-      document.getElementById('btn-new').classList.toggle('active', m === 'new');
-      document.getElementById('btn-same').classList.toggle('active', m === 'same');
+      document.getElementById('btn-new').classList.toggle('active', m==='new');
+      document.getElementById('btn-same').classList.toggle('active', m==='same');
       document.getElementById('mode-label').textContent =
         m === 'new' ? 'opens in a new tab' : 'replaces this page';
       setStatus('ready', 'ready to launch');
@@ -314,8 +592,8 @@
       const bar  = document.getElementById('status-bar');
       const dot  = document.getElementById('status-dot');
       const text = document.getElementById('status-text');
-      bar.className  = 'status-bar' + (type === 'error' ? ' error' : type === 'success' ? ' success' : '');
-      dot.className  = 'dot' + (type === 'go' ? ' go' : type === 'error' ? ' err' : type === 'success' ? ' ok' : '');
+      bar.className = 'status-bar' + (type==='error'?' error':type==='success'?' success':'');
+      dot.className = 'dot' + (type==='go'?' go':type==='error'?' err':type==='success'?' ok':'');
       text.textContent = msg;
     }
 
@@ -328,38 +606,22 @@
     }
 
     function launch() {
-      const raw = document.getElementById('url-input').value;
+      closeSuggestions();
+      const raw = input.value;
       const url = normalizeUrl(raw);
-
-      if (!url) {
-        setStatus('error', 'please enter a URL first');
-        document.getElementById('url-input').focus();
-        return;
-      }
-
-      try { new URL(url); } catch(e) {
-        setStatus('error', "that doesn't look like a valid URL");
-        return;
-      }
-
-      setStatus('go', 'launching → ' + url);
-
+      if (!url) { setStatus('error','please enter a URL first'); input.focus(); return; }
+      try { new URL(url); } catch(e) { setStatus('error',"that doesn't look like a valid URL"); return; }
+      setStatus('go','launching → ' + url);
       if (mode === 'new') {
         window.open(url, '_blank', 'noopener,noreferrer');
-        setTimeout(() => setStatus('success', 'opened in new tab ✓'), 400);
+        setTimeout(() => setStatus('success','opened in new tab ✓'), 400);
       } else {
         window.location.href = url;
       }
     }
 
-    document.getElementById('url-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') launch();
-    });
-
-    document.getElementById('url-input').addEventListener('input', () => {
-      setStatus('ready', 'ready to launch');
-    });
+    /* ── INIT ── */
+    buildGrid();
   </script>
-
 </body>
 </html>
